@@ -9,3 +9,5 @@ vscode:
   extensions:
     - esbenp.prettier-vscode
     - mintlify.document
+    - dsznajder.es7-react-js-snippets
+    - bradlc.vscode-tailwindcss
