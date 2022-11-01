@@ -2,11 +2,13 @@ import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
 // import { SiShopware } from "react-icons/si";
 import { FcCheckmark } from 'react-icons/fc'
+import { GiExtraTime, GiDuration } from 'react-icons/gi'
 import { MdOutlineCancel } from 'react-icons/md'
 import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 
 import { FcCalendar, FcList } from 'react-icons/fc'
 
+import { useStateContext } from '../contexts/ContextProvider'
 
 const links = [
     {
@@ -21,7 +23,13 @@ const links = [
     },
 ]
 const Sidebar = () => {
-    const activeMenu = true
+    const { activeMenu, setActiveMenu, screenSize } = useStateContext()
+
+    const handleCloseSideBar = () => {
+        if (screenSize <= 768) {
+            setActiveMenu(false)
+        }
+    }
     const activeLink =
         'flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md m-2 font-bold text-black dark:text-white'
     const normalLink =
@@ -33,11 +41,11 @@ const Sidebar = () => {
                     <div className="flex justify-between items-center">
                         <Link
                             to="/"
-                            onClick={() => {}}
+                            onClick={handleCloseSideBar}
                             className="flex items-center gap-3 ml-3 mt-4 text-xl font-extrabold tracking-tight dark:text-white text-slate-900"
                         >
-                            <FcCheckmark className="text-3xl" />
-                            <span>Scheduler</span>
+                            <GiDuration className="text-3xl transition duration-1000 hover:rotate-180" />
+                            <span>Smart Scheduler</span>
                         </Link>
                         <TooltipComponent
                             content="Menu"
@@ -45,8 +53,8 @@ const Sidebar = () => {
                         >
                             <button
                                 type="button"
-                                onClick={() => {}}
-                                className="text-xl rounded-full p-3 hover:bg-light-gray mt-4 block md:hidden"
+                                onClick={() => setActiveMenu(!activeMenu)}
+                                className="text-lg rounded-full p-1 hover:bg-light-gray mt-4 block md:hidden"
                             >
                                 <MdOutlineCancel />
                             </button>
@@ -62,7 +70,7 @@ const Sidebar = () => {
                             <NavLink
                                 key={item.title}
                                 to={item.link}
-                                onClick={() => {}}
+                                onClick={handleCloseSideBar}
                                 className={({ isActive }) =>
                                     isActive ? activeLink : normalLink
                                 }
