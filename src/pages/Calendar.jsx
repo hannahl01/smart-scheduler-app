@@ -181,7 +181,7 @@ const Calendar = () => {
     }
 
     return (
-        <div className="m-2 md:m-10 mt-24 md:mt-24 p-2 md:p-10 bg-white rounded-3xl">
+        <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
             {/* <Header category="App" title="Calendar" /> */}
             <button
                 className="m-2 p-2 rounded-full bg-white hover:bg-light-gray"

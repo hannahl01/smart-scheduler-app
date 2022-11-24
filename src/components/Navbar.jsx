@@ -32,6 +32,8 @@ const Navbar = () => {
         signedInUser,
         screenSize,
         setScreenSize,
+        handleClick,
+        isClicked,
     } = useStateContext()
 
     useEffect(() => {
@@ -68,29 +70,34 @@ const Navbar = () => {
                 <TooltipComponent content="Profile" position="BottomCenter">
                     <div
                         className="flex items-center gap-2 cursor-pointer py-1 px-2 md:px-1 hover:bg-light-gray rounded-lg"
-                        onClick={() => {}}
+                        onClick={() => handleClick('userProfile')}
                     >
-                        {/* <img
-                        className="rounded-full w-8 h-8"
-                        src={avatar}
-                        alt="user-profile"
-                    /> */}
-                        <div className="flex justify-center items-center rounded-full w-8 h-8 bg-cyan-500 text-lg">
-                            {signedInUser.username.slice(0, 1)}
-                        </div>
-                        <div className='hidden md:flex gap-2 items-center'>
+                        {signedInUser?.picture ? (
+                            <img
+                                className="rounded-full w-8 h-8"
+                                src={signedInUser?.picture}
+                                alt="user-profile"
+                            />
+                        ) : (
+                            <div className="flex justify-center items-center rounded-full w-8 h-8 bg-cyan-500 text-lg">
+                                {signedInUser?.name.slice(0, 1) || ''}
+                            </div>
+                        )}
+                        <div className="hidden md:flex gap-2 items-center">
                             <p>
                                 <span className="text-gray-400 text-14">
                                     Hi,
                                 </span>{' '}
                                 <span className="text-gray-400 font-bold ml-1 text-14">
-                                    {signedInUser.username}
+                                    {signedInUser?.name || 'Null'}
                                 </span>
                             </p>
                             <HiOutlineChevronDown className="text-gray-400 text-14" />
                         </div>
                     </div>
                 </TooltipComponent>
+
+                {isClicked.userProfile && <UserProfile />}
             </div>
         </div>
     )

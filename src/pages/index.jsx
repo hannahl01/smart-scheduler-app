@@ -1,3 +1,8 @@
-export { default as Agenda } from "./Agenda";
-export { default as Calendar } from "./Calendar";
-export { default as Home } from "./Home";
+export { default as Agenda } from './Agenda'
+export { default as Calendar } from './Calendar'
+export { default as Home } from './Home'
+export { default as SharedLayout } from './SharedLayout'
+export { default as ProtectedRoute } from './ProtectedRoute'
+export { default as Register } from './Register'
+export { default as Landing } from './Landing'
+export { default as Error } from './Error'

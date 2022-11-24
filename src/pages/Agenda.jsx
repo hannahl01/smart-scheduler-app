@@ -1,9 +1,7 @@
 import React from 'react'
 
 const Agenda = () => {
-  return (
-    <div>Agenda</div>
-  )
+    return <div className="mt-10">Agenda</div>
 }
 
 export default Agenda
