@@ -9,6 +9,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups'
 import { FcCalendar, FcList } from 'react-icons/fc'
 
 import { useStateContext } from '../contexts/ContextProvider'
+import { AddTaskButton, Button } from '.'
 
 const links = [
     {
@@ -23,7 +24,8 @@ const links = [
     },
 ]
 const Sidebar = () => {
-    const { activeMenu, setActiveMenu, screenSize } = useStateContext()
+    const { activeMenu, setActiveMenu, screenSize, calendarScheduleObj } =
+        useStateContext()
 
     const handleCloseSideBar = () => {
         if (screenSize <= 768) {
@@ -82,6 +84,18 @@ const Sidebar = () => {
                     </div>
                 </>
             )}
+            <div className="flex items-center gap-5 mt-6 px-4 pb-6 pt-3 font-bold text-black dark:text-whiteborder-color border-b-1">
+                {/* <Button
+                    color="white"
+                    bgColor="cyan-500"
+                    bgHoverColor="cyan-600"
+                    text="+ Add event/task"
+                    borderRadius="full"
+                    width="full"
+                    handleClick={() => {}}
+                /> */}
+                <AddTaskButton />
+            </div>
         </div>
     )
 }
