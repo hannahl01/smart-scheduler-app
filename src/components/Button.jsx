@@ -12,6 +12,7 @@ const Button = ({
     borderRadius,
     width,
     handleClick,
+    ...other
 }) => {
     const { setIsClicked, initialStateNavBar } = useStateContext()
     return (
@@ -20,6 +21,7 @@ const Button = ({
             onClick={handleClick}
             // style={{ backgroundColor: bgColor, color, borderRadius }}
             className={`text-${size} p-3 w-${width} hover:drop-shadow-xl bg-${bgColor} hover:bg-${bgHoverColor} rounded-${borderRadius}`}
+            {...other}
         >
             {icon} {text}
         </button>
