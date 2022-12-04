@@ -31,6 +31,11 @@ export const ContextProvider = ({ children }) => {
     const [signedInUserToken, setSignedInUserToken] = useState(
         initialState.token
     )
+    const [googleConsentPage, setGoogleConsentPage] = useState('')
+
+    const [calendarScheduleObj, setCalendarScheduleObj] = useState()
+    const [scheduleData, setScheduleData] = useState([])
+
     const [isClicked, setIsClicked] = useState(initialStateNavBar)
 
     const addUserToLocalStorage = ({ user, token }) => {
@@ -51,9 +56,10 @@ export const ContextProvider = ({ children }) => {
             )
             console.log(data)
 
-            const { user, token } = data
+            const { user, token, authUrl } = data
             setSignedInUser(user)
             setSignedInUserToken(token)
+            setGoogleConsentPage(authUrl)
             addUserToLocalStorage({
                 user,
                 token,
@@ -67,6 +73,36 @@ export const ContextProvider = ({ children }) => {
         removeUserFromLocalStorage()
         setSignedInUser(null)
         setSignedInUserToken(null)
+    }
+
+    const openGoogleConsentPage = () => {
+        window.open(googleConsentPage, '_self')
+    }
+
+    const fetchData = async () => {
+        try {
+            const { data } = await axios.get(
+                'http://localhost:8080/api/v1/schedule'
+            )
+            console.log(data)
+            setScheduleData(data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const createEvent = async (data) => {
+        try {
+            const res = await axios.post(
+                'http://localhost:8080/api/v1/schedule/event',
+                data
+            )
+            console.log(res)
+            return res
+            // setScheduleData(data)
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     const handleClick = (clicked) =>
@@ -83,9 +119,16 @@ export const ContextProvider = ({ children }) => {
                 signedInUser,
                 setupUser,
                 logoutUser,
+                openGoogleConsentPage,
+                calendarScheduleObj,
+                setCalendarScheduleObj,
+                scheduleData,
+                setScheduleData,
+                fetchData,
                 isClicked,
                 setIsClicked,
                 handleClick,
+                createEvent,
             }}
         >
             {children}
