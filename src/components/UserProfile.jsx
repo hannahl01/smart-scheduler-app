@@ -5,8 +5,13 @@ import { Button } from '.'
 import { useStateContext } from '../contexts/ContextProvider'
 
 const UserProfile = () => {
-    const { signedInUser, setIsClicked, initialStateNavBar, logoutUser } =
-        useStateContext()
+    const {
+        signedInUser,
+        setIsClicked,
+        initialStateNavBar,
+        logoutUser,
+        openGoogleConsentPage,
+    } = useStateContext()
     return (
         <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] drop-shadow-xl p-8 rounded-lg w-96">
             <div className="flex justify-between items-center">
@@ -28,7 +33,7 @@ const UserProfile = () => {
                     }
                 />
             </div>
-            <div className="flex gap-5 items-center mt-6 border-color border-b-1 pb-6">
+            <div className="flex gap-5 items-center mt-6">
                 {signedInUser?.picture ? (
                     <img
                         className="rounded-full h-24 w-24"
@@ -54,6 +59,17 @@ const UserProfile = () => {
                         {signedInUser?.email || ''}{' '}
                     </p>
                 </div>
+            </div>
+            <div className="flex border-color border-b-1 mt-6 pb-6">
+                <Button
+                    color="white"
+                    bgColor="cyan-500"
+                    bgHoverColor="light-gray"
+                    text="Connect Google Calendar"
+                    borderRadius="lg"
+                    width="full"
+                    handleClick={() => openGoogleConsentPage()}
+                />
             </div>
             <div className="mt-5">
                 <Button
