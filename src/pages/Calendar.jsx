@@ -18,6 +18,7 @@ import {
 } from '@syncfusion/ej2-react-calendars'
 import { DropDownListComponent } from '@syncfusion/ej2-react-dropdowns'
 import axios from 'axios'
+import { useStateContext } from '../contexts/ContextProvider'
 
 // import { scheduleData } from '../data/dummy';
 // import { Header } from '../components';
@@ -26,20 +27,22 @@ import axios from 'axios'
 const PropertyPane = (props) => <div className="mt-5">{props.children}</div>
 
 const Calendar = () => {
-    const [scheduleObj, setScheduleObj] = useState()
-    const [scheduleData, setScheduleData] = useState([])
+    // const [scheduleObj, setScheduleObj] = useState()
+    const [screenHeight, setScreenHeight] = useState()
+    const {
+        calendarScheduleObj: scheduleObj,
+        setCalendarScheduleObj: setScheduleObj,
+        scheduleData,
+        fetchData,
+    } = useStateContext()
+    // const [scheduleData, setScheduleData] = useState([])
 
-    const fetchData = async () => {
-        try {
-            const { data } = await axios.get(
-                'http://localhost:8080/api/v1/schedule'
-            )
-            console.log(data)
-            setScheduleData(data)
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    useEffect(() => {
+        const handleResize = () => setScreenHeight(window.innerHeight)
+        window.addEventListener('resize', handleResize)
+        handleResize()
+        return () => window.removeEventListener('resize', handleResize)
+    }, [])
 
     const createData = async (event) => {
         try {
@@ -181,17 +184,18 @@ const Calendar = () => {
     }
 
     return (
-        <div className="m-2 md:m-10 p-2 md:p-10 bg-white rounded-3xl">
+        <div className="m-2 md:m-2 p-2 md:p-2 bg-white">
             {/* <Header category="App" title="Calendar" /> */}
-            <button
+            {/* <button
                 className="m-2 p-2 rounded-full bg-white hover:bg-light-gray"
                 type="button"
                 onClick={onClickButton}
             >
                 Add task
-            </button>
+            </button> */}
             <ScheduleComponent
-                height="650px"
+                width="auto"
+                height={screenHeight - 100}
                 ref={(schedule) => setScheduleObj(schedule)}
                 selectedDate={new Date()}
                 eventSettings={{ dataSource: scheduleData }}
@@ -200,11 +204,9 @@ const Calendar = () => {
                 actionComplete={onActionComplete}
             >
                 <ViewsDirective>
-                    {['Day', 'Week', 'WorkWeek', 'Month', 'Agenda'].map(
-                        (item) => (
-                            <ViewDirective key={item} option={item} />
-                        )
-                    )}
+                    {['Day', 'Week', 'WorkWeek', 'Month'].map((item) => (
+                        <ViewDirective key={item} option={item} />
+                    ))}
                 </ViewsDirective>
                 <Inject
                     services={[
@@ -218,7 +220,7 @@ const Calendar = () => {
                     ]}
                 />
             </ScheduleComponent>
-            <PropertyPane>
+            {/* <PropertyPane>
                 <table style={{ width: '100%', background: 'white' }}>
                     <tbody>
                         <tr style={{ height: '50px' }}>
@@ -234,7 +236,7 @@ const Calendar = () => {
                         </tr>
                     </tbody>
                 </table>
-            </PropertyPane>
+            </PropertyPane> */}
         </div>
     )
 }
